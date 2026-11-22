@@ -2,7 +2,19 @@
 
 > 服务端权威的连续大气场 + Fabric 纯客户端渲染。一个端口，零外部依赖，零客户端判定。
 
-**当前状态：Phase 0–3 已实现并可构建。** 已产出服务端插件与 Fabric 客户端 mod 的可安装 jar（见 [Releases](../../releases) 或本地 `build/libs/`）。设计文档见 [`docs/`](docs/)。
+![Atmos 实机演示：雷暴预警 + 七要素实况 + 七日预报 + 气旋雷达](dist/atmos-demo.png)
+
+**当前状态：Phase 0–3 已实现并可构建。** 已产出服务端插件与 Fabric 客户端 mod 的可安装 jar（见下方 [下载](#下载) / [Releases](../../releases)）。设计文档见 [`docs/`](docs/)。
+
+### 下载
+
+| 产物 | 说明 | 获取方式 |
+|---|---|---|
+| `atmos-server-0.1.0.jar` | 服务端插件（含 protocol，78 KB） | [Releases](../../releases) / `dist/` |
+| `atmos-client-0.1.0.jar` | Fabric 1.21.11 纯客户端 mod（42 KB） | [Releases](../../releases) / `dist/` |
+| `atmos-demo.png` | 实机演示宣传图（1600×900） | `dist/` |
+
+> 上图为程序化绘制的功能示意，展示的是本实现真实提供的 HUD 元素（红色预警 BossBar、七要素实况栏、7 日预报、气旋雷达、局地 ActionBar、快捷栏），非实时游戏截图。
 
 > 说明：本实现采用 **模式 A（默认）+ 协议 proto=1**。1.21.11 的 Mojang 映射将 `Identifier.of` 改名为 `Identifier.fromNamespaceAndPath`、`RenderTickCounter` 改名为 `DeltaTracker`、`PacketCodec` 改名为 `StreamCodec`、`CustomPayload` 改名为 `CustomPacketPayload`；代码已按 1.21.11 实际 API 适配，帧字节布局与协议契约表保持一致。
 
