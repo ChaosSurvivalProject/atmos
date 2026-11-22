@@ -1,0 +1,24 @@
+name: Atmos
+version: 0.1.0
+main: dev.atmos.server.AtmosPlugin
+api-version: 1.21.11
+author: ChaosSurvivalProject
+description: 真实气象系统（服务端权威 + Fabric 纯客户端渲染，单端口 Custom Payload）
+prefix: Atmos
+
+commands:
+  wx:
+    description: Atmos 气象命令
+    usage: /wx now|forecast|warn|radar|score|set|reload|verify|debug
+    aliases: [weather, atmos]
+
+permissions:
+  atmos.use:
+    description: 基础天气查询
+    default: true
+  atmos.forecaster:
+    description: 气象员
+    default: op
+  atmos.admin:
+    description: 管理员
+    default: op

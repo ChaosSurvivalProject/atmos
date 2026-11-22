@@ -1,0 +1,32 @@
+# Atmos 主配置 —— 模式 A 为默认（保留全局天气作基底，vanilla 玩家不掉线）
+config-version: 1
+
+# 网格边长（越大越精细但越耗内存/带宽，32~512）
+grid-size: 128
+# field 批发送间隔（tick，20=1秒）
+sync-period-ticks: 20
+
+weather:
+  # A=保留原版雨/雷作基底（推荐）；B=关闭全局雨，降水全由 mod 画（无 mod 者看不到雨）
+  base-mode: A
+
+network:
+  # 是否强制 mod。注意：无论如何都绝不踢人，只友好提示
+  require-mod: false
+  # 下发视距（格）
+  view-distance-cells: 24
+  # 每玩家每秒 C→S 包限流
+  max-incoming-per-sec: 20
+
+performance:
+  byte-budget-per-sec: 65536
+  mspt-soft: 12
+  mspt-hard: 20
+
+effects:
+  enabled: true
+
+# 可选：与真实世界对齐（仅出站 HTTPS 拉取并缓存，默认关闭，不监听任何端口）
+real-world-sync:
+  enabled: false
+  url: https://api.open-meteo.com/v1/forecast

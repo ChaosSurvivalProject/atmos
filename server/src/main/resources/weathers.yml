@@ -1,0 +1,109 @@
+# 配置驱动天气注册表。tier: 0 普通 / 1 强 / 2 极端。
+# id 按出现顺序分配，客户端据此渲染（0=晴 ... 见 README）。
+weathers:
+  clear:
+    name: "晴"
+    tier: 0
+    temp-min: -100
+    temp-max: 100
+    warn-lead-ticks: 0
+  partly_cloudy:
+    name: "多云"
+    tier: 0
+  cloudy:
+    name: "阴"
+    tier: 0
+  fog:
+    name: "雾"
+    tier: 0
+  drizzle:
+    name: "毛毛雨"
+    tier: 0
+  rain:
+    name: "小雨"
+    tier: 0
+  shower:
+    name: "阵雨"
+    tier: 0
+  sleet:
+    name: "雨夹雪"
+    tier: 0
+  snow:
+    name: "雪"
+    tier: 0
+  thunderstorm:
+    name: "雷阵雨"
+    tier: 0
+  heavy_rain:
+    name: "暴雨"
+    tier: 1
+    warn-lead-ticks: 300
+    effects:
+      damage-crops: true
+  blizzard:
+    name: "暴雪"
+    tier: 1
+    warn-lead-ticks: 300
+    effects:
+      push-entities: true
+  hail:
+    name: "冰雹"
+    tier: 1
+    effects:
+      hail-damage: true
+      damage-crops: true
+  freezing_rain:
+    name: "冻雨"
+    tier: 1
+  sandstorm:
+    name: "沙尘暴"
+    tier: 1
+    effects:
+      push-entities: true
+  gale:
+    name: "大风"
+    tier: 1
+    effects:
+      push-entities: true
+      break-glass: true
+  dense_fog:
+    name: "浓雾"
+    tier: 1
+  heatwave:
+    name: "热浪"
+    tier: 1
+  drought:
+    name: "干旱"
+    tier: 1
+  superstorm:
+    name: "超级雷暴"
+    tier: 2
+    warn-lead-ticks: 600
+    effects:
+      push-entities: true
+      ignite: true
+      shelter-safe: true
+  typhoon:
+    name: "台风"
+    tier: 2
+    warn-lead-ticks: 600
+    effects:
+      push-entities: true
+      break-glass: true
+      shelter-safe: true
+  tornado:
+    name: "龙卷风"
+    tier: 2
+    warn-lead-ticks: 600
+    effects:
+      push-entities: true
+      break-glass: true
+      shelter-safe: true
+  whiteout:
+    name: "白毛风"
+    tier: 2
+    warn-lead-ticks: 600
+  extreme_heat:
+    name: "极端高温"
+    tier: 2
+    warn-lead-ticks: 600

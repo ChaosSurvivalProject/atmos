@@ -1,0 +1,13 @@
+# 预报配置
+days: 7            # 可配 3/7/14
+segments-per-day: 4  # 凌晨/上午/午后/夜间
+republish-every-mc-days: 1
+confidence:
+  decay-per-day: 12
+  min: 5
+publish:
+  book-gui: true
+  actionbar-countdown: true
+  weather-station-block: true
+  radar-map: true
+  webhook: false   # 默认关闭，仅出站 HTTPS，不监听端口

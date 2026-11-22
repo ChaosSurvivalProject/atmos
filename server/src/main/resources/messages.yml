@@ -1,0 +1,10 @@
+prefix: "§6[Atmos]§r "
+warn:
+  blue: "§9气象预警：注意天气变化"
+  yellow: "§6气象预警：强天气逼近"
+  orange: "§6§l气象预警：恶劣天气即将到来"
+  red: "§4§l气象预警：极端天气！立即寻找室内庇护！"
+storm:
+  incoming: "§c检测到强气旋，预计 %s 分钟后抵达"
+mod:
+  suggest: "§7安装 Fabric 客户端 mod 可获得局地气象渲染体验"

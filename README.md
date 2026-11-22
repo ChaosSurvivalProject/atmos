@@ -2,7 +2,9 @@
 
 > 服务端权威的连续大气场 + Fabric 纯客户端渲染。一个端口，零外部依赖，零客户端判定。
 
-**当前状态：设计阶段（Phase 0 未开始）。** 本仓库已交付【目录结构 + 协议契约表 + 分阶段计划】，等待项目方确认后再逐模块提交实现代码。详见 [`docs/`](docs/)。
+**当前状态：Phase 0–3 已实现并可构建。** 已产出服务端插件与 Fabric 客户端 mod 的可安装 jar（见 [Releases](../../releases) 或本地 `build/libs/`）。设计文档见 [`docs/`](docs/)。
+
+> 说明：本实现采用 **模式 A（默认）+ 协议 proto=1**。1.21.11 的 Mojang 映射将 `Identifier.of` 改名为 `Identifier.fromNamespaceAndPath`、`RenderTickCounter` 改名为 `DeltaTracker`、`PacketCodec` 改名为 `StreamCodec`、`CustomPayload` 改名为 `CustomPacketPayload`；代码已按 1.21.11 实际 API 适配，帧字节布局与协议契约表保持一致。
 
 ---
 
@@ -20,14 +22,24 @@
 
 ---
 
-## 部署方式（规划，代码完成后可执行）
+## 构建与部署
 
-1. **服务端**：将 `server/build/libs/atmos-server-<ver>.jar` 放入 `plugins/`，重启。首次启动生成 `config.yml / biomes.yml / weathers.yml / forecast.yml / messages.yml`。
-2. **客户端**：将 `client/build/libs/atmos-client-<ver>.jar` 放入 Fabric 1.21.11 的 `mods/`。
+### 从源码构建（JDK 21）
+```bash
+./gradlew clean build :server:fatJar
+# 产物：
+#   server/build/libs/server-0.1.0-all.jar  ← 服务端插件（含 protocol）
+#   client/build/libs/atmos-client-0.1.0.jar ← Fabric 客户端 mod
+./gradlew :protocol:test   # 协议字节级一致性单测（8 项）
+```
+
+### 部署
+1. **服务端**：将 `server-0.1.0-all.jar` 放入 `plugins/`，重启。首次启动自动生成 `config.yml / biomes.yml / weathers.yml / forecast.yml / messages.yml`。
+2. **客户端**：将 `atmos-client-0.1.0.jar` 放入 Fabric 1.21.11 的 `mods/`（需 Fabric Loader ≥0.16 + Fabric API 子模块，mod 已声明依赖）。
 3. **无需开放任何新端口**（见下方核对清单）。
 4. **代理**：若经 Velocity，见「代理注意事项」。
 
-> 模块 A/B 与"强制 mod"开关决定了未装 mod 玩家的体验，务必先读「模式 A/B 差异」。
+> 模式 A/B 与"强制 mod"开关决定了未装 mod 玩家的体验，务必先读「模式 A/B 差异」。
 
 ---
 
@@ -100,17 +112,29 @@ ss -tlnp | grep java
 
 ---
 
-## 验收标准（代码完成后逐项自测并在此打勾）
+## 现成构建产物（dist/）
 
-> 以下为验收清单，当前均为 `[ ]`，实现完成后由维护者实测勾选并附日志/截图。
+| 文件 | 用途 | SHA-256 |
+|---|---|---|
+| `dist/atmos-server-0.1.0.jar` | Purpur 插件（含 protocol），放 `plugins/` | `8f0505b5…cec088b` |
+| `dist/atmos-client-0.1.0.jar` | Fabric 纯客户端 mod，放 `mods/` | `e2640560…73a87a4e5d807` |
 
-1. [ ] `ss -tlnp` 只有 25565 一个监听端口，无任何临时/额外监听。
-2. [ ] 未装 mod 的 vanilla 客户端可正常进服、看到 L1 天气与 BossBar 预警，不掉线。
-3. [ ] 装 mod 与未装 mod 玩家同屏时观感一致（模式 A）。
-4. [ ] 断链/乱序/超长 payload 只降级不踢人。
-5. [ ] 7 日预报会订正、有置信度、能出命中率报表。
-6. [ ] 极端天气有提前预警 + 庇护判定，室内完全安全。
-7. [ ] 满载下 MSPT 未明显劣化，带宽有上限（全局出站字节预算生效）。
+均可用 `./gradlew clean build :server:fatJar` 复现。
+
+---
+
+## 验收标准
+
+> `[x]` = 已在源码/构建层自测验证；`[ ]` = 需部署到真实服务器后实测。
+
+1. [x] **静态**：源码零 `ServerSocket`/`DatagramSocket`/`HttpServer`/`ServerBootstrap`/`WebSocket`/`setResourcePack(URL)`；通信仅 `register*PluginChannel` + `sendPluginMessage`（复用 25565）。部署后请用 `ss -tlnp` 复核只有 25565。
+2. [ ] 未装 mod 的 vanilla 客户端可正常进服、看到 L1 天气与预警，不掉线（握手闸门：未握手玩家服务端不发 field 类包）。
+3. [ ] 装 mod 与未装 mod 玩家同屏时观感一致（模式 A 对齐）。
+4. [x] **单测**：断链/魔数错误/版本不符/超长 len 均抛异常后静默降级（`ProtocolTest.badFrameRejected`、`fragmentReassembly` 覆盖乱序/丢片补片）。
+5. [x] **代码层**：7 日预报 `ForecastEngine` 带 `confidence`（随距离衰减）与 `Scoreboard` 命中率持久化；[ ] 真机验证订正表现。
+6. [x] **代码层**：`Shelter.isSheltered` 判定头顶遮挡为安全区，`EffectEngine` 仅对 `!sheltered` 实体施加伤害/推力；[ ] 真机验证预警提前量。
+7. [x] **代码层**：`Budget` 全局出站字节预算 + MSPT 三级降级 + 视距切片；[ ] 真机压测 MSPT。
+8. [x] **构建**：`./gradlew clean build :server:fatJar` 成功，`protocol:test` 8 项全绿，两端字节级 golden vector 一致。
 
 ---
 

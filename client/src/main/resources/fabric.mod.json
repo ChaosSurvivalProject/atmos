@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "atmos",
+  "version": "${version}",
+  "name": "Atmos 真实气象",
+  "description": "Atmos 纯客户端渲染模组：局地气象场、预报 HUD、预警横幅。服务端为唯一权威，本模组不参与判定。",
+  "authors": ["ChaosSurvivalProject"],
+  "contact": {
+    "homepage": "https://github.com/ChaosSurvivalProject/atmos",
+    "sources": "https://github.com/ChaosSurvivalProject/atmos"
+  },
+  "license": "GPL-3.0",
+  "environment": "client",
+  "entrypoints": {
+    "client": ["dev.atmos.client.AtmosClient"]
+  },
+  "mixins": [],
+  "depends": {
+    "fabricloader": ">=0.16.0",
+    "minecraft": ">=1.21.11",
+    "java": ">=21",
+    "fabric-api-base": "*",
+    "fabric-networking-api-v1": "*",
+    "fabric-lifecycle-events-v1": "*",
+    "fabric-rendering-v1": "*"
+  }
+}

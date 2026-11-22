@@ -1,0 +1,14 @@
+# 每群系温度曲线偏移（°C）与降水修正。一次性克隆快照异步读取，不碰实时区块。
+biomes:
+  PLAINS:        { temp-bias: 0,  humidity-bias: 0 }
+  DESERT:        { temp-bias: 12, humidity-bias: -0.4 }
+  SAVANNA:       { temp-bias: 8,  humidity-bias: -0.2 }
+  TAIGA:         { temp-bias: -8, humidity-bias: 0.1 }
+  SNOWY_TUNDRA:  { temp-bias: -18, humidity-bias: 0 }
+  JUNGLE:        { temp-bias: 6,  humidity-bias: 0.3 }
+  SWAMP:         { temp-bias: 3,  humidity-bias: 0.35 }
+  OCEAN:         { temp-bias: -2, humidity-bias: 0.3 }
+nether:
+  ash-fall: enabled   # 下界灰烬雨
+end:
+  void-storm: enabled # 末地虚空风暴
