@@ -1,3 +1,13 @@
+> ## 星穹旅驿出品 · Chaos Survival Project
+> 
+> 本插件/模组由 **星穹旅驿（Chaos Survival Project）** 团队开发维护。
+> 遇到问题或有功能建议？请到 **GitHub** 提交 Issue 反馈，我们会尽快处理。
+> This plugin/mod is developed by **星穹旅驿 (Chaos Survival Project)**. Found a bug or have a suggestion? Please report it on [GitHub Issues](https://github.com/ChaosSurvivalProject/atmos/issues).
+> 
+> 🔗 GitHub 仓库 / Repo: [https://github.com/ChaosSurvivalProject/atmos](https://github.com/ChaosSurvivalProject/atmos) ｜ 反馈 / Issues: [https://github.com/ChaosSurvivalProject/atmos/issues](https://github.com/ChaosSurvivalProject/atmos/issues)
+
+---
+
 # Atmos —— Minecraft 1.21.11 真实气象系统（C/S 协同）
 
 > 服务端权威的连续大气场 + Fabric 纯客户端渲染。一个端口，零外部依赖，零客户端判定。
